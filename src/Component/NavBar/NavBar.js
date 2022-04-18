@@ -1,6 +1,4 @@
-import { useDispatch } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 import "./NavBar.css";
 
 
