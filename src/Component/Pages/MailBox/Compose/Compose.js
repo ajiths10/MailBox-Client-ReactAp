@@ -22,6 +22,7 @@ const Compose = () => {
       console.log(Sendername);
       const data={
           sender:sender,
+          receiver:receiver,
           subject:SubjectRef.current.value,
           body:text,
       }

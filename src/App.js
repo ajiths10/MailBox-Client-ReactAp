@@ -3,7 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import Footer from "./Component/Footer/Footer";
 import NavBar from "./Component/NavBar/NavBar";
 import LoginPage from "./Component/Pages/LoginPage/LoginPage";
-import Compose from "./Component/Pages/MailBox/Compose";
+import MailBoxBody from "./Component/Pages/MailBox/Body/MailBoxBody";
+
 import Welcome from "./Component/Pages/WelcomePage/Welcome";
 
 
@@ -20,7 +21,7 @@ function App() {
           <Welcome />
         </Route>
         <Route path="/mailbox">
-          <Compose />
+          <MailBoxBody />
         </Route>
       </Switch>
       <Footer />

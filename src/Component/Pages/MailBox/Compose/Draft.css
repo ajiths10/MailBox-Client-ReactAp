@@ -6,6 +6,7 @@
 
 .editor {
   margin-right: 10em;
+  width: 80%;
 }
 
 .ck-editor__editable_inline {
