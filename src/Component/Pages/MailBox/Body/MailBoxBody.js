@@ -9,6 +9,7 @@ import { InboxActions } from '../../../store/inboxToggle';
 import MailItemBody from './MailItemBody';
 import { MailItemActions } from '../../../store/MailFullBody';
 
+
 const MailBoxBody =()=>{
     const dispatch = useDispatch();
     const isCompose = useSelector(state=>state.compose.isCompose)
@@ -103,7 +104,12 @@ useEffect(()=>{ loadInbox() },[])
             })
         }
       useEffect(()=>{ counter() },[msg])
- 
+
+useEffect(()=>{
+    setTimeout(() => {
+        loadInbox()
+    }, 9000);
+},[msg])
 
     return(
         <div>
@@ -128,6 +134,7 @@ useEffect(()=>{ loadInbox() },[])
             {isClicked && <div className='MailItemDiv'>
                 <MailItemBody />
             </div>}
+            
         </div>
     )
 };

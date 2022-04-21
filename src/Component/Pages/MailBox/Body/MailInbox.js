@@ -6,10 +6,11 @@ import { InboxActions } from '../../../store/inboxToggle';
 
 import './MailBox.css';
 
+
 const MailInbox=(props)=>{
     const dispatch = useDispatch();
     const isSentbox = useSelector(state=>state.isInbox.setBox)
-    console.log(props)
+    
 
     const mailBoxHandler=async()=>{ 
         console.log(props)
@@ -38,6 +39,7 @@ const MailInbox=(props)=>{
 
     return(
         <div >
+            
             <div className="itemDivmail" onClick={mailBoxHandler}>
                 {!props.isRead && !isSentbox && <span className={props.isRead? 'read' : 'unread'}>•</span>}
                 <label className="gap">{props.subject}</label>
