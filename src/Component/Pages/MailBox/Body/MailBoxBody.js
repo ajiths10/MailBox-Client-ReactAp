@@ -6,17 +6,22 @@ import './MailBoxBody.css';
 import { useEffect, useState } from 'react';
 import MailInbox from './MailInbox';
 import { InboxActions } from '../../../store/inboxToggle';
+import MailItemBody from './MailItemBody';
+import { MailItemActions } from '../../../store/MailFullBody';
 
 const MailBoxBody =()=>{
     const dispatch = useDispatch();
     const isCompose = useSelector(state=>state.compose.isCompose)
     const isInbox = useSelector(state=>state.isInbox.isInbox)
+    const isClicked = useSelector(state=>state.milItem.isClicked)
     var arr=[];
     const [msg , setmsg] = useState([]);
+    const [totalCount , setCount] =useState(0);
 
     const composeHandler=(event)=>{
         event.preventDefault();
         dispatch(composeActions.toggleCompose());
+        dispatch(MailItemActions.setClicked(false))
     }
 
     const loadInbox= async()=>{
@@ -39,10 +44,8 @@ const MailBoxBody =()=>{
         }
     };
 useEffect(()=>{ loadInbox() },[])
-console.log(msg);
   
         const mails = msg.map((element)=>{
-            console.log(element.body);
             
             return (<MailInbox body={element.body} 
             sender={element.sender} 
@@ -50,16 +53,28 @@ console.log(msg);
             receiver={element.receiver}
             key={element.id}
             id={element.id}
+            isRead={element.read}
             />)
         })
         const sendBoxHandler=()=>{
             dispatch(InboxActions.setInbox(false))
         }
         const InBoxHandler=()=>{
+            loadInbox()
             dispatch(InboxActions.setInbox(true))
-
+            dispatch(MailItemActions.setClicked(false))
         }
         
+        const counter =()=>{
+            let c=0;
+            msg.map((element)=>{
+                if(!element.read){
+                    c++;
+                }
+                setCount(c); 
+            })
+        }
+      useEffect(()=>{ counter() },[msg])
     
 
     return(
@@ -68,7 +83,7 @@ console.log(msg);
                 <div className="sideBarContent">
                     <button className="ComposeBtn" onClick={composeHandler} > Compose </button>
                 <div className='inbox' onClick={InBoxHandler} >
-                   <label>Inbox</label> 
+                   <label>Inbox {totalCount}</label> 
                 </div>
                 <div className='inbox' onClick={sendBoxHandler} >
                     <label> Sent</label>
@@ -80,6 +95,9 @@ console.log(msg);
             </div>}
             {!isCompose && isInbox && <div className="mailDivitems" >
                 {mails}
+            </div>}
+            {isClicked && <div className='MailItemDiv'>
+                <MailItemBody />
             </div>}
         </div>
     )
