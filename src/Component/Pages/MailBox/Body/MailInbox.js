@@ -1,12 +1,14 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import parse from "html-react-parser"
 import { MailItemActions } from '../../../store/MailFullBody';
 import { InboxActions } from '../../../store/inboxToggle';
+
 import './MailBox.css';
 
 const MailInbox=(props)=>{
     const dispatch = useDispatch();
+    const isSentbox = useSelector(state=>state.isInbox.setBox)
     console.log(props)
 
     const mailBoxHandler=async()=>{ 
@@ -14,8 +16,9 @@ const MailInbox=(props)=>{
         dispatch(MailItemActions.addNewItem(props))
         dispatch(MailItemActions.setClicked(true));
         dispatch(InboxActions.setInbox(false));
+        dispatch(InboxActions.setSentBox(false));
         console.log(props.id)
-        if(!props.isRead){
+        if(!isSentbox && !props.isRead){
 
             const receiver = props.receiver;
             const name   = receiver.substring(0, receiver.lastIndexOf("@"));
@@ -36,7 +39,7 @@ const MailInbox=(props)=>{
     return(
         <div >
             <div className="itemDivmail" onClick={mailBoxHandler}>
-                {!props.isRead && <span className={props.isRead? 'read' : 'unread'}>•</span>}
+                {!props.isRead && !isSentbox && <span className={props.isRead? 'read' : 'unread'}>•</span>}
                 <label className="gap">{props.subject}</label>
                 <label className="gap">{parse(props.body)}</label>
                 <label className="gap">{props.sender}</label>
