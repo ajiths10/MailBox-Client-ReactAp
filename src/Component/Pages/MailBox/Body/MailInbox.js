@@ -15,19 +15,24 @@ const MailInbox=(props)=>{
         dispatch(MailItemActions.setClicked(true));
         dispatch(InboxActions.setInbox(false));
         console.log(props.id)
-        const receiver = props.receiver;
-        const name   = receiver.substring(0, receiver.lastIndexOf("@"));
-        const id = props.id;
-        const data ={
-            "read": true
-        }
-        try{
-            const res = await axios.patch(`https://mailbox-client-default-rtdb.firebaseio.com/${name}/receive/${id}.json`,data)
-            console.log(res)
-        }catch(err){
-            console.log(err);
+        if(!props.isRead){
+
+            const receiver = props.receiver;
+            const name   = receiver.substring(0, receiver.lastIndexOf("@"));
+            const id = props.id;
+            const data ={
+                "read": true
+            }
+            try{
+                const res = await axios.patch(`https://mailbox-client-default-rtdb.firebaseio.com/${name}/receive/${id}.json`,data)
+                console.log(res)
+            }catch(err){
+                console.log(err);
+            }
         }
     }
+
+
     return(
         <div >
             <div className="itemDivmail" onClick={mailBoxHandler}>
@@ -36,6 +41,7 @@ const MailInbox=(props)=>{
                 <label className="gap">{parse(props.body)}</label>
                 <label className="gap">{props.sender}</label>
             </div>
+                
         </div>
     ) 
 }
