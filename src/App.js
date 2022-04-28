@@ -4,7 +4,7 @@ import Footer from "./Component/Footer/Footer";
 import NavBar from "./Component/NavBar/NavBar";
 import LoginPage from "./Component/Pages/LoginPage/LoginPage";
 import MailBoxBody from "./Component/Pages/MailBox/Body/MailBoxBody";
-
+import Loading from './Component/Loading/Loading';
 import Welcome from "./Component/Pages/WelcomePage/Welcome";
 
 
@@ -22,6 +22,9 @@ function App() {
         </Route>
         <Route path="/mailbox">
           <MailBoxBody />
+        </Route>
+        <Route path="/about">
+          <Loading />
         </Route>
       </Switch>
       <Footer />
