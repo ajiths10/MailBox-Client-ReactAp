@@ -1,16 +1,21 @@
 import { useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux"; 
+import { authActions } from "../store/auth";
 import "./NavBar.css";
+
 
 
 const NavBar = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const logoutHandler = (event) => {
     event.preventDefault();
     localStorage.setItem("JWTTOKEN", "");
     localStorage.setItem("userID", "");
     localStorage.setItem("Email", "");
+    dispatch(authActions.setAuth(false));
     history.replace('/auth');
   };
   const isLogin = useSelector(state=>state.auth.isAuth)
