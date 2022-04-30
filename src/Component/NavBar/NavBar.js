@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import "./NavBar.css";
 
@@ -12,7 +13,7 @@ const NavBar = () => {
     localStorage.setItem("Email", "");
     history.replace('/auth');
   };
-  const isLogin = false;
+  const isLogin = useSelector(state=>state.auth.isAuth)
 
   return (
     <div className="mainDivv">

@@ -1,9 +1,12 @@
 import React, { useRef,useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../store/auth';
 import './LoginPage.css';
 
 
 
 const LoginPage = () =>{
+    const dispatch = useDispatch()
 
     const emailRef= useRef();
     const passwordOneRef =useRef();
@@ -50,6 +53,7 @@ const LoginPage = () =>{
                         emailRef.current.value='';
                         passwordOneRef.current.value='';
                         alert('Login sucessFull');
+                        dispatch(authActions.setAuth(true))
                       }else{
                         const data = await response.json();
                         alert(data.error.message);
