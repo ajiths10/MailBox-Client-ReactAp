@@ -1,5 +1,6 @@
 import React, { useRef,useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { authActions } from '../../store/auth';
 import './LoginPage.css';
 
@@ -7,6 +8,7 @@ import './LoginPage.css';
 
 const LoginPage = () =>{
     const dispatch = useDispatch()
+    const history = useHistory();
 
     const emailRef= useRef();
     const passwordOneRef =useRef();
@@ -53,6 +55,7 @@ const LoginPage = () =>{
                         emailRef.current.value='';
                         passwordOneRef.current.value='';
                         alert('Login sucessFull');
+                        history.replace('/welcome');
                         dispatch(authActions.setAuth(true))
                       }else{
                         const data = await response.json();
