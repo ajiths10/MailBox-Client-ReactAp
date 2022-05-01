@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Footer from "./Component/Footer/Footer";
 import NavBar from "./Component/NavBar/NavBar";
@@ -6,30 +6,39 @@ import LoginPage from "./Component/Pages/LoginPage/LoginPage";
 import MailBoxBody from "./Component/Pages/MailBox/Body/MailBoxBody";
 import Loading from './Component/Loading/Loading';
 import Welcome from "./Component/Pages/WelcomePage/Welcome";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "./Component/store/auth";
 
 
 function App() {
+  const dispatch = useDispatch();
   const isLogin = useSelector(state=>state.auth.isAuth);
+  useEffect(()=>{ dispatch(authActions.checker()) },[])
+  
   return (
     <Fragment>
       <NavBar />
-      
       <Switch>
-        <Route path="/auth" >
-          { !isLogin &&<LoginPage />}
-        </Route>
-        <Route path="/welcome"> 
-          { isLogin && <Welcome />}
-          { !isLogin &&  <Redirect to='/auth'></Redirect>   }
-        </Route>
-        <Route path="/mailbox">
-        { isLogin &&  <MailBoxBody /> }
-        { !isLogin &&  <Redirect to='/auth'></Redirect>  }
-        </Route>
+        { isLogin && <Route path="/welcome"> 
+          <Welcome />
+        </Route>}
+
+        { isLogin && <Route path="/mailbox">
+         <MailBoxBody /> 
+        </Route>}
+
         <Route path="/about">
           <Loading />
         </Route>
+         { !isLogin &&<Route path="/auth" >
+         <LoginPage />
+        </Route>}
+
+        <Route path='*' exact>
+          {isLogin && <Redirect to='/mailbox'></Redirect>}
+          { !isLogin && <Redirect to='/auth'></Redirect>}
+        </Route>
+
       </Switch>
       <Footer />
       
