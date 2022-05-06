@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { authActions } from "../../store/auth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -98,7 +98,6 @@ const LoginPage = () => {
     }catch(err){
         console.log('Something went wrong')
         console.log(err);
-
     }
 }  
     },
@@ -173,7 +172,7 @@ const LoginPage = () => {
                   {swapCheck ? "Login" : "SignUp"}
                 </button>
                 {swapCheck && (
-                  <label className="forgotpassword"> Forgot password</label>
+                  <NavLink to='/resetpassword' className="forgotpassword"> Forgot password</NavLink>
                 )}
               </div>
             </div>

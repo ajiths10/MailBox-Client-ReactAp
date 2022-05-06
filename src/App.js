@@ -8,6 +8,7 @@ import Loading from './Component/Loading/Loading';
 import Welcome from "./Component/Pages/WelcomePage/Welcome";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "./Component/store/auth";
+import PasswordReset from "./Component/Pages/PasswordReset/PasswordReset";
 
 
 function App() {
@@ -32,6 +33,9 @@ function App() {
         </Route>
          { !isLogin &&<Route path="/auth" >
          <LoginPage />
+        </Route>}
+         { !isLogin &&<Route path="/resetpassword" >
+         <PasswordReset />
         </Route>}
 
         <Route path='*' exact>
