@@ -8,44 +8,44 @@ const PasswordReset = () => {
     const emailRef = useRef();
     const history = useHistory();
 
-    // const resetButtonhandler= async(event) => {
-    //     event.preventDefault();
-    //     const enteredEmail=emailRef.current.value;
+    const resetButtonhandler= async(event) => {
+        event.preventDefault();
+        const enteredEmail=emailRef.current.value;
 
-    //     setLoading(true);
-    //     try{
-    //         const response = await fetch(
-    //             "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCrNT0jOFIUrCoslzyrlcZDJIUqzYGvDLc",
-    //             {
-    //               method: "POST",
-    //               body: JSON.stringify({
-    //                 requestType: "PASSWORD_RESET",
-    //                 email: enteredEmail,
-    //                 returnSecureToken: true,
-    //               }),
-    //               headers: {
-    //                 "Content-Type": "application/json",
-    //               },
-    //             }
-    //        )
-    //        if(response.ok){
-    //         const data = await response.json();
-    //         console.log(data);
-    //         alert(`Link successfully send to ${enteredEmail}`)
-    //         history.replace('/auth');
+        setLoading(true);
+        try{
+            const response = await fetch(
+                "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBcp2QFFnFM8y6S7A_OTDQlJR65FQoNujA",
+                {
+                  method: "POST",
+                  body: JSON.stringify({
+                    requestType: "PASSWORD_RESET",
+                    email: enteredEmail,
+                    returnSecureToken: true,
+                  }),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+           )
+           if(response.ok){
+            const data = await response.json();
+            console.log(data);
+            alert(`Link successfully send to ${enteredEmail}`)
+            history.replace('/auth');
             
-    //        }
-    //        else{
-    //         const data = await response.json();
-    //         alert(data.error.message);
-    //        }
-    //        setLoading(false);
-    //     }catch(err){
-    //         console.log('Something went wrong')
-    //         console.log(err);
-    //         setLoading(false);
-    //     }
-   // }
+           }
+           else{
+            const data = await response.json();
+            alert(data.error.message);
+           }
+           setLoading(false);
+        }catch(err){
+            console.log('Something went wrong')
+            console.log(err);
+            setLoading(false);
+        }
+   }
     const gotoHandler =(event) => {
         event.preventDefault();
         history.replace("/auth");
@@ -65,7 +65,7 @@ const PasswordReset = () => {
                     <input  className='inputfield' type='email' placeholder='Email' ref={emailRef} />
                 </div>
                 <div>
-                    <button className='Mainbtn'  > {isLoading? 'Sending...' : 'Send Link'}</button>
+                    <button className='Mainbtn' onClick={resetButtonhandler} > {isLoading? 'Sending...' : 'Send Link'}</button>
                 </div>
                 <div className='downlabeldiv' >
                     <label className='downlabel' >Know your Password?<span className='downspan' onClick={gotoHandler} >Login </span> </label>
